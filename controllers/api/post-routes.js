@@ -96,13 +96,16 @@ router.post('/', (req, res) => {
 
 // PUT /api/posts/upvote: create the vote
 router.put('/upvote', (req, res) => {
-  // Custom static method created in models/Post.js
-  Post.upvote(req.body, { Vote, Comment, User })
-  .then(updatedVoteData => res.json(updatedVoteData))
-  .catch(err => {
-    console.log(err);
-    res.status(400).json(err);
-  });
+  // Make sure the session exists first
+  if (req.session) {
+    // Custom static method created in models/Post.js
+    Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+    .then(updatedVoteData => res.json(updatedVoteData))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+  }
 });
 
 router.put('/:id', (req, res) => {
