@@ -12,28 +12,33 @@ User.hasMany(Post, {
 // Post to user relationship
 Post.belongsTo(User, {
     foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 // User to multiple votes relationship
 User.belongsToMany(Post, {
     through: Vote,
     as: 'voted_posts',
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 // Votes to multiple users relationship
 Post.belongsToMany(User, {
     through: Vote,
     as: 'voted_posts',
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
 
 Vote.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 Vote.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
 
 User.hasMany(Vote, {
@@ -46,15 +51,18 @@ Post.hasMany(Vote, {
 
 // User comments
 Comment.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 Comment.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
 
 Comment.hasMany(Comment, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 Post.hasMany(Comment, {
